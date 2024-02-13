@@ -39,7 +39,7 @@
       </router-view>
     </q-page-container>
 
-    <q-footer class="h-14 bg-bottom">
+    <!-- <q-footer class="h-14 bg-bottom">
       <q-tabs content-class="bg-bottom text-sprimary" active-class="text-text" spread narrow-indicator
         indicator-color="transparent">
         <template v-for="item in config.menu.filter(m => m.tab)" :key="item.id">
@@ -51,7 +51,7 @@
         </template>
 
       </q-tabs>
-    </q-footer>
+    </q-footer> -->
 
     <q-dialog v-model="add" position="bottom">
       <q-card :class="config.theme">
@@ -109,13 +109,16 @@ import { useQuasar } from 'quasar';
 import { useConfig } from 'src/stores/config';
 import moment from 'moment'
 import Calculator from 'src/components/Calculator.vue';
+import { useControl } from 'src/stores/control';
 
 export default {
   data() {
     const config = useConfig();
     const $q = useQuasar();
+    const store = useControl();
     return {
       menuOpen: false,
+      store,
       config,
       $q,
       add: false,
@@ -156,6 +159,9 @@ export default {
         this.$router.push('/');
       }
     }
+  },
+  async mounted(){
+    await this.store.getControls()
   },
   components: { Calculator }
 }

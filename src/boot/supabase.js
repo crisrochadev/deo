@@ -12,6 +12,7 @@ export async function getUser(){
   const { data: { user } } = await supabase.auth.getUser();
   return user ? user : null
 }
+
 export default boot(({ app }) => {
   app.config.globalProperties.$supabase = supabase
 })
